@@ -68,7 +68,7 @@ gulp.task('watch', function(){
 
 
 
-// this task allows us to deploy our site to github pages directly from the 'dist' folder, basically the same as a new commit and a push, because we named it deploy, we can write gulp deploy in the command line to run it
+// this task allows us to deploy our site to github pages directly from the 'dist' folder- to the gh-pages branch on github, basically the same as a new commit and a push, because we named it deploy, we can write gulp deploy in the command line to run it, note: make sure your netlify and GH pages are both deploying from the gh-pages branch
 gulp.task('deploy', function(){
     ghPages.publish('dist')
 })
