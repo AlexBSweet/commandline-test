@@ -1,0 +1,27 @@
+{
+  "name": "command-line-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexBSweet/commandline-test.git"
+  },
+  "author": "Alex Sweet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexBSweet/commandline-test/issues"
+  },
+  "homepage": "https://github.com/AlexBSweet/commandline-test#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "node-sass": "^4.11.0"
+  }
+}
