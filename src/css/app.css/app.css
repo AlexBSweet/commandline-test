@@ -1,0 +1,30 @@
+@font-face {
+  font-family: jost-book;
+  src: url(../fonts/jost-book.woff2), url(../fonts/jost-book.woff); }
+
+body {
+  background-color: blue;
+  font-family: jost-book;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; }
+
+h1 {
+  font-family: jost-book;
+  font-size: 44px;
+  color: #0f0303; }
+
+p {
+  font-family: jost-book;
+  font-size: 24px;
+  color: #fff; }
+
+section {
+  width: 500px; }
+  section p {
+    margin: 40px 0; }
+  @media (max-width: 800px) {
+    section {
+      width: 300px; } }
