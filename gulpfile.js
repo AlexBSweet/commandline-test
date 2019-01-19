@@ -5,33 +5,62 @@
 
 // when we say require '', we're pulling the name of the function from our package.json file
 var gulp = require("gulp")
-var sass = require("gulp-sass")
+// we commented out all of the sass lines when we switched over to postCSS
+// var sass = require("gulp-sass")
+// sass.compiler = require('node-sass');
 var cleanCSS = require('gulp-clean-css')
+// post css is similar to css but allows you to do even more, people are generally moving away from sass and towards postcss
+var postCSS = require('gulp-postcss')
 // sourceMaps maps out our minified css so we can still see what line is going wrong when debugging
 var sourceMaps = require('gulp-sourcemaps')
-
-
+// gh pages allows us to publish directly to a gh-pages branch in our repository with a single command ('gulp deploy') which we specified below
+var ghpages = require('gh-pages')
+//image minifier, pipes out minified images to dist folder from source files in our src folder
 var imageMin = require('gulp-imagemin')
+// gulp-concat concatenates our stylesheets, taking multiple from our src folder and outputting a single stylesheet in our dist folder
+var concat = require('gulp-concat')
 
 
 
 
-
-
-
-
-sass.compiler = require('node-sass');
-
-
-//here we separate out sass as a function so we can run it independently of the rest of the tasks gulp is managing, note that we're also running cleanCSS and sourceMaps in this function 
-gulp.task('sass', function(){
-    return gulp.src('src/css/app.scss')
+gulp.task('css', function(){
+    return gulp.src([
+        'src/css/reset.css',
+        'src/css/typography.css',
+        'src/css/app.css'
+    ])
     .pipe(sourceMaps.init())
-    .pipe(sass())
-    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(
+        postCSS([
+            require('autoprefixer'),
+            require('postcss-preset-env')({
+                stage: 1,
+                browsers: ['IE 11', 'last 2 versions']
+            })
+        ])
+        )
+    .pipe(concat('app.css'))
+    .pipe(
+        cleanCSS(
+            {compatibility: 'ie8'})
+        )
     .pipe(sourceMaps.write())
     .pipe(gulp.dest('dist'))
 })
+
+
+
+
+// we commented out the sass function when we switched to post css
+//here we separate out sass as a function so we can run it independently of the rest of the tasks gulp is managing, note that we're also running cleanCSS and sourceMaps in this function 
+// gulp.task('sass', function(){
+//     return gulp.src('src/css/app.scss')
+//     .pipe(sourceMaps.init())
+//     .pipe(sass())
+//     .pipe(cleanCSS({compatibility: 'ie8'}))
+//     .pipe(sourceMaps.write())
+//     .pipe(gulp.dest('dist'))
+// })
 
 
 //it's common in development to set up a src folder for working and a dist folder for final, here we take the files we need from working and push them forward to the final "dist" folder
@@ -59,7 +88,7 @@ gulp.task('images', function(){
 // here we set up our watch function so that we don't have to re-run gulp in the command line every time we make a change, type gulp watch to run, although we also added it below to the default command so simply typing gulp in the command line will run watch as well
 // note that we added watch to any changes in the html and any updates in our fonts folder
 gulp.task('watch', function(){
-    gulp.watch('src/css/app.scss',['sass'])
+    gulp.watch('src/css/*',['css'])
     gulp.watch('src/*.html', ['html'])
     gulp.watch('src/fonts/*', ['fonts'])
     gulp.watch('src/img/*', ['images'])
@@ -67,6 +96,11 @@ gulp.task('watch', function(){
 
 
 
+gulp.task('deploy', function(){
+    ghpages.publish('dist')
+})
+
+
 // this specifies what the default gulp command will run, i.e. when you type gulp into the command line what does it do?
-gulp.task('default', ['html','sass', 'fonts', 'images', 'watch']);
+gulp.task('default', ['html','css', 'fonts', 'images', 'watch']);
 

@@ -1,0 +1,102 @@
+/* NOTE--THIS IS A POST CSS WORKING FILE THAT OUTPUTS TO A FILE IN DIST */
+/* this is how we set up variables in post css */
+:root{
+    --primary-color:red;
+    --text-on-light: #151620;
+    --text-on-dark: #fff;
+    --background-color:#fff;
+    --main-spacing: 64px;
+    --gap-spacing:40px;
+    --header-height:80px;
+    --hero-spacing: 240px;
+    --centered-width: 50%;
+}
+
+@custom-media --mq-medium (max-width:960px);
+@custom-media --mq-small (max-width: 550px);
+
+
+
+
+body{
+    background-color: var(--primary-color)
+}
+
+header{
+    background-color: var(--primary-color);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px var(--main-spacing);
+    height:var(--header-height);
+}
+section.grid, section.centered {
+    margin: 0 var(--main-spacing);
+}
+section.hero{
+    padding: var(--hero-spacing) var(--main-spacing);
+    color: var(--text-on-dark);
+    text-shadow: 0 0 10px rgb(202, 202, 202);
+    text-align: center;
+    background-image: image-set('img/rainbow.jpg' 1x, 'img/rainbow@2x.jpg' 2x);
+    background-size:cover;
+    background-position:center;
+}
+section.menu{
+    background-image: image-set('img/green-wall.jpg' 1x, 'img/green-wall@2x.jpg' 2x)
+}
+
+section.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: var(--gap-spacing);
+    align-items:center;
+    margin-top:40px;
+    margin-bottom:40px;
+    background-color:var(--background-color);
+}
+section.grid p{
+    margin-top:20px;
+    margin-bottom:20px;
+    width:80%;
+}
+.button{
+    display:inline-block;
+    color: var(--text-on-dark);
+    border: 1px solid var(--text-on-dark);
+    text-decoration: none;
+    padding: 10px 30px;
+}
+.button-full{
+    background-color: var(--primary-color);
+
+}
+section.centered{
+    text-align: center;
+    width: var(--centered-width);
+    margin:0 auto;
+}
+
+@media (--mq-medium){
+    :root{
+        --main-spacing:40px;
+        --gap-spacing:20px;
+        --hero-spacing:120px;
+        --centered-width: 70%;
+    }
+}
+@media(--mq-small){
+    section.grid{
+        grid-template-columns: 1fr
+    }
+    :root{
+        --main-spacing: 32px;
+        --hero-spacing: 80px;
+    }
+    header img{
+        width:140px;
+    }
+}
+
+
+
